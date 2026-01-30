@@ -2,7 +2,7 @@ package com.cinema.gui;
 
 import com.cinema.dao.*;
 import com.cinema.dto.*;
-import java.sql.Date;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -124,11 +124,7 @@ public class BanVePanel extends JPanel {
             }
         });
 
-        // Load Products for mapping
-        // List<SanPham> spList = new SanPhamDAO().getAllSanPham();
-        // for (SanPham sp : spList) {
-        // productMap.put(sp.getTenSP().toLowerCase(), sp.getMaSP());
-        // }
+
 
         // --- LEFT: MOVIE LIST ---
         add(createLeftPanel(), BorderLayout.WEST);
@@ -1410,7 +1406,7 @@ public class BanVePanel extends JPanel {
         hd.setMaNV(nhanVien != null ? nhanVien.getMaNV() : 1);
         int custId = (currentMember != null) ? currentMember.getMaKH() : new KhachHangDAO().ensureGuestCustomer();
         hd.setMaKH(custId);
-        hd.setNgayLap(new Date(System.currentTimeMillis()));
+        hd.setNgayLap(new java.sql.Date(System.currentTimeMillis()));
         hd.setTongTien(total);
         hd.setOrderCode(currentOrderCode);
 
