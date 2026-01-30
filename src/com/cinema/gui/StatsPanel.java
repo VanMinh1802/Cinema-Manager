@@ -395,14 +395,11 @@ public class StatsPanel extends JPanel {
             float drawY = y - dy * z * 2;
 
             // 3D Shading using RadialGradient (Light source top-left offset)
-            Point2D center = new Point2D.Float(drawX + size * 0.3f, drawY + size * 0.3f); // Highlight offset
-            float radius = size;
+
             float[] dist = { 0.0f, 1.0f };
             Color[] colors = { colorMain, colorShadow };
 
-            RadialGradientPaint paint = new RadialGradientPaint(
-                    center, radius, new Point2D.Float(drawX + size / 2, drawY + size / 2), // focus vs center
-                    dist, colors, MultipleGradientPaint.CycleMethod.NO_CYCLE);
+
 
             // Simpler paint since focus center requires complex constructor
             // Let's use standard constructor

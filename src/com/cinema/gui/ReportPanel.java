@@ -693,15 +693,15 @@ public class ReportPanel extends JPanel {
         bw.write("<table>");
         bw.write("<tr><th>Category</th><th>Revenue</th><th>Percentage</th></tr>");
 
-        java.util.List<Object[]> concList = isMonthlyMode
-            ? dao.getRevenueByConcessionType(selectedDate.getMonth() + 1, selectedDate.getYear() + 1900)
-            : dao.getRevenueByConcessionType(selectedDate);
+        java.util.List<Object[]> concList;
 
         if (isMonthlyMode) {
           java.util.Calendar cal = java.util.Calendar.getInstance();
           cal.setTime(selectedDate);
           concList = dao.getRevenueByConcessionType(cal.get(java.util.Calendar.MONTH) + 1,
               cal.get(java.util.Calendar.YEAR));
+        } else {
+          concList = dao.getRevenueByConcessionType(selectedDate);
         }
 
         double totalConc = concession > 0 ? concession : 1;
@@ -1218,73 +1218,5 @@ public class ReportPanel extends JPanel {
     });
   }
 
-  private void loadDataLegacy() {
-    // Show Loading State (Cursor)
-    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-    SwingWorker<DashboardData, Void> worker = new SwingWorker<>() {
-      @Override
-      protected DashboardData doInBackground() throws Exception {
-        DashboardData data = new DashboardData();
-
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        cal.setTime(selectedDate);
-        int m = cal.get(java.util.Calendar.MONTH) + 1;
-        int y = cal.get(java.util.Calendar.YEAR);
-
-        if (isMonthlyMode) {
-          data.revenue = dao.getRevenue(m, y);
-          data.tickets = dao.getTickets(m, y);
-          data.occupancy = dao.getOccupancy(m, y);
-
-          // Monthly Concession (Sum of daily)
-          double[] dailyC = dao.getDailyConcessionRevenueStruct(m, y);
-          data.concession = 0;
-          for (double d : dailyC)
-            data.concession += d;
-
-          data.ticketDist = dao.getDailyRevenueStruct(m, y);
-          data.foodDist = dailyC;
-          data.numBars = 31;
-
-          data.genreData = dao.getRevenueByGenre(m, y);
-          data.concessionData = dao.getRevenueByConcessionType(m, y);
-
-        } else {
-          data.revenue = dao.getRevenue(selectedDate);
-          data.tickets = dao.getTickets(selectedDate);
-          data.occupancy = dao.getOccupancy(selectedDate);
-          data.concession = dao.getConcessionSales(selectedDate);
-
-          data.ticketDist = dao.getHourlyRevenue(selectedDate);
-          data.foodDist = dao.getHourlyConcessionRevenue(selectedDate);
-          data.foodDist[0] = 0; // Fix legacy artifact
-          data.numBars = 24;
-
-          data.genreData = dao.getRevenueByGenre(selectedDate);
-          data.genreData = dao.getRevenueByGenre(selectedDate);
-          data.concessionData = dao.getRevenueByConcessionType(selectedDate);
-          data.transactions = dao.getDetailTransactions(selectedDate); // Fetch transactions
-        }
-        return data;
-      }
-
-      @Override
-      protected void done() {
-        try {
-          DashboardData data = get();
-          updateStatsUI(data);
-          updateChartsUI(data);
-          currentTransactions = data.transactions;
-          updateTransactionTable(); // Update table
-        } catch (Exception e) {
-          e.printStackTrace();
-          JOptionPane.showMessageDialog(ReportPanel.this, "Error loading data: " + e.getMessage());
-        } finally {
-          setCursor(Cursor.getDefaultCursor());
-        }
-      }
-    };
-    worker.execute();
-  }
 }
