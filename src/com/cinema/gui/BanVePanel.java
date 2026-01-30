@@ -331,16 +331,9 @@ public class BanVePanel extends JPanel {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-                // Draw Solid White Arc
                 g2.setColor(Color.WHITE);
-                // int arcH = 40; // unused
-                // Draw a large arc that looks like a curved screen
-                // We'll fill a chord or arc shape
                 int w = getWidth();
                 g2.fillArc(-50, -20, w + 100, 60, 190, 160); // Simplified curve top
-
-                // Text centered
                 g2.setColor(Color.BLACK);
                 g2.setFont(new Font("SansSerif", Font.BOLD, 14));
                 FontMetrics fm = g2.getFontMetrics();
@@ -1656,19 +1649,8 @@ public class BanVePanel extends JPanel {
         return btn;
     }
 
-    private JLabel createTotalLabel(String title, String value) {
-        JLabel l = new JLabel(title + ": " + value);
-        l.setForeground(TXT_SECONDARY);
-        l.setAlignmentX(Component.LEFT_ALIGNMENT);
-        return l;
-    }
 
-    private JSeparator createSeparator() {
-        JSeparator s = new JSeparator();
-        s.setForeground(new Color(255, 255, 255, 30));
-        s.setBackground(new Color(255, 255, 255, 30));
-        return s;
-    }
+
 
     // --- PRINTING LOGIC ---
     private void printInvoice(int maHD, double total, double discount, double tax, double subTotal,

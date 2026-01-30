@@ -22,7 +22,7 @@ public class SchedulePanel extends JPanel {
 
     // --- COLORS ---
     private static final Color BG_MAIN = new Color(11, 7, 7);
-    private static final Color BG_SIDEBAR = new Color(18, 12, 12);
+    // private static final Color BG_SIDEBAR = new Color(18, 12, 12); // unused
 
     private static final Color ACCENT_RED = new Color(229, 9, 20);
     private static final Color GRID_LINE = new Color(40, 30, 30);

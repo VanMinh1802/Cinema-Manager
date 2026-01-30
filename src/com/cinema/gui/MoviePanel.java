@@ -7,7 +7,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -402,25 +401,25 @@ public class MoviePanel extends JPanel {
 
             String text = v.toString();
             Color bg, fg;
-            Color border = null;
+            // Color border = null; // unused
 
             // Logic for Color
             if (text.equals("Sci-Fi")) {
                 bg = new Color(20, 30, 50);
                 fg = new Color(100, 181, 246);
-                border = fg;
+                // border = fg;
             } else if (text.equals("Action")) {
                 bg = new Color(50, 20, 20);
                 fg = new Color(229, 115, 115);
-                border = fg;
+                // border = fg;
             } else if (text.equals("Active")) {
                 bg = new Color(20, 40, 20);
                 fg = new Color(102, 187, 106);
-                border = fg;
+                // border = fg;
             } else {
                 bg = new Color(40, 40, 40);
                 fg = Color.GRAY;
-                border = Color.GRAY;
+                // border = Color.GRAY;
             }
 
             JLabel l = new JLabel(text);
