@@ -334,7 +334,7 @@ public class BanVePanel extends JPanel {
 
                 // Draw Solid White Arc
                 g2.setColor(Color.WHITE);
-                int arcH = 40;
+                // int arcH = 40; // unused
                 // Draw a large arc that looks like a curved screen
                 // We'll fill a chord or arc shape
                 int w = getWidth();

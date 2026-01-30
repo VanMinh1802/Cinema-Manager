@@ -626,20 +626,7 @@ public class EmployeePanel extends JPanel {
         });
     }
 
-    private void loadDataLegacy() {
-        tableModel.setRowCount(0);
-        List<NhanVien> list = nhanVienDAO.getAllNhanVien();
-        for (NhanVien nv : list) {
-            String status = (nv.getTrangThai() == 1) ? "Active" : "Inactive";
-            tableModel.addRow(new Object[] {
-                    "#" + nv.getMaNV(),
-                    nv.getHoTen(),
-                    "@" + nv.getTaiKhoan(),
-                    nv.getChucVu(),
-                    status
-            });
-        }
-    }
+
 
     private void clearForm() {
         txtHoTen.setText("");

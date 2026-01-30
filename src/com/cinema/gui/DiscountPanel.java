@@ -778,18 +778,7 @@ public class DiscountPanel extends JPanel {
     }
   }
 
-  private void saveChanges() {
-    // Just for demo, assuming edits in editorPanel update 'selectedPromo' object
-    // reference directly (or we pull fields)
-    // For now, editorPanel handles its own saving in this code structure via 'bind'
-    // but real app would need getFields()
-    // But in the existing code, I see update logic in buttons inside EditorPanel?
-    // Let's implement saveChanges inside EditorPanel primarily or call a method on
-    // it.
-    if (editorPanel != null && selectedPromo != null) {
-      editorPanel.doSave();
-    }
-  }
+
 
   // =================================================================================
   // PROMO CARD UI

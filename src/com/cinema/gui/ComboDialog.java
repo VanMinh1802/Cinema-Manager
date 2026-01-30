@@ -7,7 +7,7 @@ import java.awt.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import javax.swing.*;
@@ -34,8 +34,8 @@ public class ComboDialog extends JDialog {
 
   // Colors
   private static final Color BG_DARK = Color.decode("#121212");
-  private static final Color BG_INPUT = Color.decode("#2A2A2A");
-  private static final Color TXT_PRIMARY = Color.WHITE;
+  // private static final Color BG_INPUT = Color.decode("#2A2A2A"); // unused
+  // private static final Color TXT_PRIMARY = Color.WHITE; // unused
   private static final Color ACCENT_RED = Color.decode("#D93636");
 
   public ComboDialog(Frame parent, SanPham combo) {

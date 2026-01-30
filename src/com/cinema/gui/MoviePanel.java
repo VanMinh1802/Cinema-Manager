@@ -3,7 +3,7 @@ package com.cinema.gui;
 import com.cinema.dao.PhimDAO;
 import com.cinema.dto.Phim;
 import java.awt.*;
-import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -514,35 +514,7 @@ public class MoviePanel extends JPanel {
         });
     }
 
-    private void loadDataLegacy(String query) {
-        tableModel.setRowCount(0);
-        List<Phim> list = phimDAO.getAllPhim();
 
-        boolean isSearch = !query.isEmpty() && !query.equals("Search by title, genre, or ID...");
-        String q = query.toLowerCase();
-
-        for (Phim p : list) {
-            if (isSearch) {
-                boolean match = p.getTenPhim().toLowerCase().contains(q) ||
-                        p.getTheLoai().toLowerCase().contains(q) ||
-                        String.valueOf(p.getMaPhim()).contains(q);
-                if (!match)
-                    continue;
-            }
-
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-            String releaseDate = p.getNamSanXuat() != null ? sdf.format(p.getNamSanXuat()) : "TBA";
-
-            tableModel.addRow(new Object[] {
-                    p, // Object for Poster
-                    p.getTenPhim(),
-                    p.getTheLoai(),
-                    p.getThoiLuong() + " min",
-                    releaseDate,
-                    p.getTrangThai()
-            });
-        }
-    }
 
     private void loadDetails(int row) {
         try {
