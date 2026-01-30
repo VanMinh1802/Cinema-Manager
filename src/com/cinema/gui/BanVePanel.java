@@ -44,8 +44,7 @@ public class BanVePanel extends JPanel {
     private List<String> currentDiscountDetails = new ArrayList<>(); // NEW
 
     private NhanVien nhanVien;
-    // private Map<String, Integer> productMap = new HashMap<>(); // Removed Legacy
-    // map
+
 
     // Dynamic Product Management
     private SanPhamDAO spDAO = new SanPhamDAO();
@@ -585,151 +584,7 @@ public class BanVePanel extends JPanel {
         });
     }
 
-    private void loadSeatMapLegacy() {
-        pnlSeatMap.removeAll();
-        JPanel pRowLabels = (JPanel) pnlSeatMap.getClientProperty("rowLabels");
-        if (pRowLabels != null)
-            pRowLabels.removeAll();
 
-        if (currentLichChieu == null)
-            return;
-
-        listGheDangChon.clear();
-        seatTypeMap.clear(); // Clear old types
-
-        // Get booked seats (Names)
-        listGheDaBan = veDAO.getGheDaBan(currentLichChieu.getMaLichChieu());
-
-        // Get Room ID
-        com.cinema.dao.PhongChieuDAO tempPDAO = new com.cinema.dao.PhongChieuDAO();
-        int maPhong = -1;
-        for (com.cinema.dto.PhongChieu pc : tempPDAO.getAllPhong()) {
-            if (pc.getTenPhong().equals(currentLichChieu.getTenPhong())) {
-                maPhong = pc.getMaPhong();
-                break;
-            }
-        }
-
-        if (maPhong == -1)
-            return;
-
-        // Fetch Dynamic Pricing
-        roomPrices = new PhongChieuDAO().getRoomPricing(maPhong);
-
-        // Fetch actual seats from DB
-        com.cinema.dao.GheDAO gheDAO = new com.cinema.dao.GheDAO();
-        List<com.cinema.dao.GheDAO.SeatInfo> seats = gheDAO.getSeatsByRoom(maPhong);
-
-        // --- Logic: Parse Rows and Cols ---
-        // Map: RowLabel -> List<SeatInfo>
-        Map<String, List<com.cinema.dao.GheDAO.SeatInfo>> rowMap = new java.util.TreeMap<>();
-        int maxCol = 0;
-
-        for (com.cinema.dao.GheDAO.SeatInfo s : seats) {
-            String name = s.tenGhe;
-            if (name == null || name.length() < 2)
-                continue;
-
-            // Store Type
-            seatTypeMap.put(name, s.loaiGhe != null ? s.loaiGhe : "Thuong");
-
-            String rowChar = name.substring(0, 1); // "A"
-            String colStr = name.substring(1); // "1"
-
-            try {
-                int col = Integer.parseInt(colStr);
-                maxCol = Math.max(maxCol, col);
-            } catch (Exception e) {
-            }
-
-            rowMap.computeIfAbsent(rowChar, k -> new ArrayList<>()).add(s);
-        }
-
-        if (maxCol == 0)
-            maxCol = 10; // Fallback
-        int rowsNeeded = rowMap.size();
-
-        int seatSize = 45;
-        int gap = 10;
-
-        pnlSeatMap.setLayout(new GridLayout(rowsNeeded, maxCol, gap, gap));
-        if (pRowLabels != null) {
-            pRowLabels.setLayout(new GridLayout(rowsNeeded, 1, gap, gap));
-        }
-
-        // Render Rows
-        for (Map.Entry<String, List<com.cinema.dao.GheDAO.SeatInfo>> entry : rowMap.entrySet()) {
-            String rowLabel = entry.getKey();
-            List<com.cinema.dao.GheDAO.SeatInfo> rowSeats = entry.getValue();
-
-            // 1. Add Label
-            JLabel lblRow = new JLabel(rowLabel, SwingConstants.RIGHT);
-            lblRow.setFont(new Font("SansSerif", Font.BOLD, 14));
-            lblRow.setForeground(Color.WHITE);
-            if (pRowLabels != null)
-                pRowLabels.add(lblRow);
-
-            // 2. Add Seats (Fill gaps 1..maxCol)
-            // Sort seats by Integer column just in case
-            rowSeats.sort((s1, s2) -> {
-                int c1 = Integer.parseInt(s1.tenGhe.substring(1));
-                int c2 = Integer.parseInt(s2.tenGhe.substring(1));
-                return Integer.compare(c1, c2);
-            });
-
-            int currentPos = 1;
-            for (com.cinema.dao.GheDAO.SeatInfo seat : rowSeats) {
-                int col = Integer.parseInt(seat.tenGhe.substring(1));
-
-                // Add gaps if any (e.g. A1, A3 -> gap at A2)
-                while (currentPos < col) {
-                    pnlSeatMap.add(Box.createRigidArea(new Dimension(seatSize, seatSize)));
-                    currentPos++;
-                }
-
-                String seatName = seat.tenGhe;
-                SeatButton btn = new SeatButton(seatName);
-                btn.setPreferredSize(new Dimension(seatSize, seatSize));
-
-                if (listGheDaBan.contains(seatName)) {
-                    btn.setBackground(SEAT_BOOKED); // Red
-                    btn.setForeground(Color.WHITE);
-                    // btn.setEnabled(false); // ENABLED for Refund Interaction
-                } else {
-                    // Use correct Available color based on TYPE
-                    String type = seatTypeMap.getOrDefault(seatName, "Thuong");
-                    if ("VIP".equalsIgnoreCase(type)) {
-                        btn.setBackground(new Color(255, 193, 7)); // Amber/Gold
-                        btn.setForeground(Color.BLACK);
-                    } else if ("Double".equalsIgnoreCase(type) || "Doi".equalsIgnoreCase(type)) {
-                        btn.setBackground(Color.decode("#E91E63")); // Pink
-                        btn.setForeground(Color.WHITE);
-                    } else {
-                        btn.setBackground(SEAT_AVAILABLE);
-                        btn.setForeground(TXT_SECONDARY);
-                    }
-                }
-                // Moved Listener OUTSIDE to allow clicking Sold seats
-                btn.addActionListener(e -> toggleSeat(btn, seatName));
-
-                pnlSeatMap.add(btn);
-                currentPos++;
-            }
-
-            // Fill remaining cols in row
-            while (currentPos <= maxCol) {
-                pnlSeatMap.add(Box.createRigidArea(new Dimension(seatSize, seatSize)));
-                currentPos++;
-            }
-        }
-
-        pnlSeatMap.revalidate();
-        pnlSeatMap.repaint();
-        if (pRowLabels != null) {
-            pRowLabels.revalidate();
-            pRowLabels.repaint();
-        }
-    }
 
     // Custom Seat Button Inner Class (Armchair Shape)
     private class SeatButton extends JButton {
@@ -812,8 +667,7 @@ public class BanVePanel extends JPanel {
         lblCheck.setForeground(Color.WHITE);
         lblCheck.setFont(new Font("SansSerif", Font.BOLD, 18));
 
-        lblCheck.setForeground(Color.WHITE);
-        lblCheck.setFont(new Font("SansSerif", Font.BOLD, 18));
+
 
         lblOrder = new JLabel(currentOrderCode);
         lblOrder.setForeground(ACCENT_RED);
@@ -1130,8 +984,7 @@ public class BanVePanel extends JPanel {
 
         lblOriginalPrice = new JLabel("Original: 0");
         lblOriginalPrice.setForeground(Color.GRAY);
-        // lblOrig.setFont(ls.getFont().deriveFont(java.awt.font.TextAttribute.STRIKETHROUGH_ON));
-        // // Advanced
+
 
         lblTotal = new JLabel("0 VNĐ");
         lblTotal.setForeground(Color.WHITE);
@@ -1686,8 +1539,7 @@ public class BanVePanel extends JPanel {
         }
 
         // 5. SUCCESS DIALOG & E-TICKET
-        // double calculatedTax = (subTotal - discount) * 0.05; // Already has it from
-        // cache
+
         String custName = (currentMember != null) ? currentMember.getHoTen() : "Guest";
 
         // Capture final list for E-Ticket (since resetCart clears it)

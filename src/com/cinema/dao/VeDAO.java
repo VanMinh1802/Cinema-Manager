@@ -119,8 +119,7 @@ public class VeDAO {
         // 'REFUNDED' WHERE v.MaLichChieu = ? AND g.TenGhe = ?
         // MySQL Update with Join:
         String sql = "UPDATE Ve v JOIN Ghe g ON v.MaGhe = g.MaGhe SET v.TrangThai = 'REFUNDED' WHERE v.MaLichChieu = ? AND g.TenGhe = ?";
-        Connection conn = DBConnection.getConnection();
-        try (PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
             pstm.setInt(1, maLichChieu);
             pstm.setString(2, tenGhe);
             return pstm.executeUpdate() > 0;

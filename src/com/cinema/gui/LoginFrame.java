@@ -275,13 +275,8 @@ public class LoginFrame extends JFrame {
 
         // Use UIUtils for Async Login
         com.cinema.util.UIUtils.runAsync(this, () -> {
-            // Background Task
-            // (Removed buggy empty try block comments)
-
-            // Actually, I must fix the checking logic to not close the connection.
-            // Let's rewrite this block safely.
-
             // 1. Get Connection (don't close it)
+
             Connection conn = DBConnection.getConnection();
             if (conn == null) {
                 // Return a special flag or handle in UI, but here we just return null to

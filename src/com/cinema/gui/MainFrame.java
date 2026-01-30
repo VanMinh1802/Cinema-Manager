@@ -51,7 +51,6 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
 
         // --- SIDEBAR ---
-        // --- SIDEBAR ---
         // Custom Gradient Panel
         sidebarPanel = new JPanel() {
             @Override
@@ -67,7 +66,7 @@ public class MainFrame extends JFrame {
             }
         };
         sidebarPanel.setLayout(new BorderLayout());
-        sidebarPanel.setPreferredSize(new Dimension(280, 0)); // Reverted width
+        sidebarPanel.setPreferredSize(new Dimension(280, 0));
         sidebarPanel.setMinimumSize(new Dimension(280, 0));
 
         // 1. Brand Header
@@ -148,8 +147,7 @@ public class MainFrame extends JFrame {
         pNav.setBorder(new EmptyBorder(10, 0, 10, 0));
 
         // Main Section
-        pNav.add(createNavButton("Home", "dashboard", e -> switchPanel(new StatsPanel(taiKhoanHienTai)))); // Renamed
-                                                                                                           // Dashboard
+        pNav.add(createNavButton("Home", "dashboard", e -> switchPanel(new StatsPanel(taiKhoanHienTai))));
         pNav.add(Box.createVerticalStrut(5));
         pNav.add(createNavButton("Booking", "ticket", e -> switchPanel(new BanVePanel(taiKhoanHienTai))));
         pNav.add(Box.createVerticalStrut(5));
@@ -287,7 +285,7 @@ public class MainFrame extends JFrame {
                 new EmptyBorder(4, 12, 4, 12)));
         btnIn.setContentAreaFilled(false);
         btnIn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnIn.setPreferredSize(new Dimension(90, 25)); // FIX: Explicit size
+        btnIn.setPreferredSize(new Dimension(90, 25));
 
         // Check-Out Button
         JButton btnOut = new JButton("Check Out");
@@ -299,7 +297,7 @@ public class MainFrame extends JFrame {
                 new EmptyBorder(4, 12, 4, 12)));
         btnOut.setContentAreaFilled(false);
         btnOut.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnOut.setPreferredSize(new Dimension(90, 25)); // FIX: Explicit size
+        btnOut.setPreferredSize(new Dimension(90, 25));
 
         // Logic
         btnIn.addActionListener(e -> {
@@ -360,7 +358,6 @@ public class MainFrame extends JFrame {
         JPanel pInfoComposite = new JPanel(new BorderLayout());
         pInfoComposite.setOpaque(false);
         pInfoComposite.add(pUserInfo, BorderLayout.CENTER);
-        // Removed pStatus from EAST
 
         // Button Bar (Check In/Out + Logout)
         JPanel pButtonBar = new JPanel(new GridLayout(1, 2, 5, 0)); // 2 cols, 5px gap
@@ -455,7 +452,7 @@ public class MainFrame extends JFrame {
             this.text = text;
             this.iconType = iconType;
             setOpaque(false);
-            setPreferredSize(new Dimension(280, 50)); // Reverted width
+            setPreferredSize(new Dimension(280, 50));
             setMaximumSize(new Dimension(280, 50));
             setCursor(new Cursor(Cursor.HAND_CURSOR));
             setBorder(new EmptyBorder(0, 15, 0, 0)); // Internal padding

@@ -26,7 +26,6 @@ public class PhimDAO {
                 p.setDaoDien(rs.getString("DaoDien"));
                 p.setMoTa(rs.getString("MoTa"));
                 p.setTrangThai(rs.getString("TrangThai"));
-                p.setTrangThai(rs.getString("TrangThai"));
                 p.setPoster(rs.getString("Poster"));
                 p.setNamSanXuat(rs.getDate("NamSanXuat"));
                 list.add(p);
@@ -64,11 +63,7 @@ public class PhimDAO {
         try (Connection conn = DBConnection.getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
 
             pstm.setInt(1, maPhim);
-            boolean success = pstm.executeUpdate() > 0;
-            if (success) {
-
-            }
-            return success;
+            return pstm.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

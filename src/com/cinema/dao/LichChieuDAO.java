@@ -18,8 +18,7 @@ public class LichChieuDAO {
                 + "JOIN PhongChieu pc ON lc.MaPhong = pc.MaPhong "
                 + "ORDER BY lc.NgayChieu DESC, lc.GioChieu ASC";
 
-        Connection conn = DBConnection.getConnection();
-        try (
+        try (Connection conn = DBConnection.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -49,8 +48,7 @@ public class LichChieuDAO {
                 + "WHERE pc.TinhTrang = 1 " // Chỉ lấy phòng Active
                 + "ORDER BY lc.NgayChieu DESC, lc.GioChieu ASC";
 
-        Connection conn = DBConnection.getConnection();
-        try (
+        try (Connection conn = DBConnection.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -72,8 +70,7 @@ public class LichChieuDAO {
 
     public boolean themLichChieu(int maPhim, int maPhong, String ngay, String gio, double gia) {
         String sql = "INSERT INTO LichChieu (MaPhim, MaPhong, NgayChieu, GioChieu, GiaVe) VALUES (?, ?, ?, ?, ?)";
-        Connection conn = DBConnection.getConnection();
-        try (PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
 
             pstm.setInt(1, maPhim);
             pstm.setInt(2, maPhong);
@@ -90,8 +87,7 @@ public class LichChieuDAO {
 
     public boolean deleteLichChieu(int maLichChieu) {
         String sql = "DELETE FROM LichChieu WHERE MaLichChieu = ?";
-        Connection conn = DBConnection.getConnection();
-        try (PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
             pstm.setInt(1, maLichChieu);
             return pstm.executeUpdate() > 0;
         } catch (Exception e) {
@@ -103,8 +99,7 @@ public class LichChieuDAO {
     // Update Time and Price only for now
     public boolean updateLichChieu(int maLichChieu, String gio, double gia) {
         String sql = "UPDATE LichChieu SET GioChieu = ?, GiaVe = ? WHERE MaLichChieu = ?";
-        Connection conn = DBConnection.getConnection();
-        try (PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
             pstm.setString(1, gio);
             pstm.setDouble(2, gia);
             pstm.setInt(3, maLichChieu);
@@ -117,8 +112,7 @@ public class LichChieuDAO {
 
     public boolean deleteLichChieuByDate(String ngay) {
         String sql = "DELETE FROM LichChieu WHERE NgayChieu = ?";
-        Connection conn = DBConnection.getConnection();
-        try (PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
             pstm.setString(1, ngay);
             return pstm.executeUpdate() > 0;
         } catch (Exception e) {
