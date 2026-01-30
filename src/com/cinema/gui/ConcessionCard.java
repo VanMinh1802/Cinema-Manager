@@ -51,10 +51,6 @@ public class ConcessionCard extends JPanel {
         repaint();
       }
 
-      // Removed click-to-edit on whole card to prefer buttons, or keep it?
-      // Keeping it might conflict with buttons if not careful.
-      // Let's remove whole-card click to avoid accidental edits when clicking
-      // buttons.
     });
 
     // Add Buttons

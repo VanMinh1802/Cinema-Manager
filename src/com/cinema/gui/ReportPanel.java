@@ -917,63 +917,26 @@ public class ReportPanel extends JPanel {
             for (Object[] row : data)
               total += (double) row[1];
 
-            double currentStart = 90;
+            double relAngle = angleDeg - 90;
+            if (relAngle < 0)
+              relAngle += 360;
+
             boolean found = false;
+            double cumulativeSweep = 0;
 
-            for (Object[] row : data) {
-              double val = (double) row[1];
-              double sweep = (val / total) * 360;
-              double currentEnd = currentStart + sweep;
-
-              // Check if angleDeg is between currentStart and currentEnd (handling wrap)
-              // Normalize all to [0, 360) for comparison?
-              // Easier: normalize angleDeg to be relative to 'currentStart'
-              // Wait, simply normalize everything to [0, 360) might split interval.
-
-              // Robust Check:
-              // Normalize angleDeg to [0, 360).
-              // Normalize start to [0, 360).
-              // end = start + sweep. (end can be > 360).
-              // if angleDeg < start, angleDeg += 360 (to handle wrap around if interval
-              // wraps).
-              // Actually, simplified:
-              // double a = angleDeg;
-              // if (a < currentStart) a += 360; (Only helps if wrapping once)
-
-              // Best way:
-              // Calculate intuitive relative angle from 90 degrees CCW.
-              // Mouse Angle (0 at 3 o'clock).
-              // Chart segments start at 90 (12 o'clock).
-              // Relative Mouse Angle = (angleDeg - 90).
-              // If < 0, +360.
-              // Now 0 is 12 o'clock.
-              // Logic loop starts at 0 relative.
-              // Segment 1: [0, sweep1]. Segment 2: [sweep1, sweep1+sweep2].
-
-              double relAngle = angleDeg - 90;
-              if (relAngle < 0)
-                relAngle += 360;
-
-              // NOW we have relAngle in [0, 360) representing progress from 12 o'clock CCW.
-              // We just need to track cumulative sweep.
-
-              double cumulativeSweep = 0;
-              for (Object[] r : data) {
-                double v = (double) r[1];
-                double s = (v / total) * 360;
-                if (relAngle >= cumulativeSweep && relAngle < cumulativeSweep + s) {
-                  // Found it
-                  String name = (String) r[0];
-                  String percent = String.format("%.1f%%", (v / total) * 100);
-                  String amount = String.format("%,.0f VNĐ", v);
-                  setToolTipText("<html><b>" + name + "</b><br/>" + amount + "<br/>" + percent + "</html>");
-                  found = true;
-                  break;
-                }
-                cumulativeSweep += s;
+            for (Object[] r : data) {
+              double v = (double) r[1];
+              double s = (v / total) * 360;
+              if (relAngle >= cumulativeSweep && relAngle < cumulativeSweep + s) {
+                // Found it
+                String name = (String) r[0];
+                String percent = String.format("%.1f%%", (v / total) * 100);
+                String amount = String.format("%,.0f VNĐ", v);
+                setToolTipText("<html><b>" + name + "</b><br/>" + amount + "<br/>" + percent + "</html>");
+                found = true;
+                break;
               }
-              if (found)
-                break; // Break outer (although inner break handles it)
+              cumulativeSweep += s;
             }
             if (!found)
               setToolTipText(null);

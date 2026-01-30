@@ -417,9 +417,6 @@ public class MainFrame extends JFrame {
 
     private void phanQuyen() {
         if ("BanVe".equalsIgnoreCase(taiKhoanHienTai.getChucVu())) {
-            // "BanVe" sees: Dashboard (0), Booking (1), Concessions (2), Policies (9)
-            // Hides: Movies (3), Schedule (4), Rooms (5), Staff (6), Shifts (7), Loyalty
-            // (8), Reports (10)
 
             navButtons.get(3).setVisible(false); // Movies
             navButtons.get(4).setVisible(false); // Schedule
