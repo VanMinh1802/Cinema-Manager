@@ -877,41 +877,14 @@ public class ReportPanel extends JPanel {
           if (dist >= innerRadius && dist <= radius) {
             // Calculate Angle (0-360, matching fillArc start at 90)
             // atan2 returns -pi to pi. 0 is Right (3 o'clock).
-            // fillArc starts at 90 (12 o'clock) and goes Counter-Clockwise (positive
-            // sweep).
-            // Wait, Swing fillArc(x, y, w, h, startAngle, arcAngle):
-            // 0 is 3 o'clock. Positive is Counter-Clockwise.
-            // My code: startAngle = 90. So 12 o'clock.
-            // arcAngle is positive.
+
 
             double theta = Math.atan2(-dy, dx); // Note -dy because screen Y is down
             if (theta < 0)
               theta += 2 * Math.PI;
             double angleDeg = Math.toDegrees(theta); // 0 at 3 o'clock, CCW.
 
-            // Adjust to match startAngle=90 logic
-            // My chart starts at 90 and adds angle (CCW).
-            // So relative angle from start (90) is:
-            // If angle is 90 (12 o'clock), relative = 0.
-            // If angle is 180 (9 o'clock), relative = 90.
-            // If angle is 0 (3 o'clock), relative = 270?
-            // Let's normalize everything to 0..360 starting at 12 o'clock CCW.
 
-            // Standard Angle: 0=East, 90=North, 180=West, 270=South.
-            // Chart Start: 90 (North).
-            // So (Angle - 90) ? No.
-            // Let's deduce.
-            // Loop code: fillArc(..., currentAngle, angle). currentAngle starts 90.
-            // So segment 1 is [90, 90+scan1]. Segment 2 is [90+scan1, 90+scan1+scan2].
-            // All angles are standard mathematical angles (0=East, CCW).
-            // So if mouse angle is `angleDeg`:
-            // It falls in Segment 1 if `angleDeg` is in [90, 90+s1] (normalized).
-            // Note: 90+s1 might wrap > 360.
-
-            // To ease comparison, let's normalize `angleDeg` relative to the "start" of the
-            // cycle which is 90?
-            // Actually, simply check if `angleDeg` is contained in the interval [start,
-            // start+sweep] modulo 360.
 
             double total = 0;
             for (Object[] row : data)
