@@ -3,7 +3,7 @@ package com.cinema.dto;
 public class DiscountPolicy {
   private int id;
   private String name;
-  private String type; // "PERCENT" or "FIXED"
+  private String type;
   private double value;
   private boolean active;
 

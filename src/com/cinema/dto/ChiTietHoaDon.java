@@ -5,7 +5,7 @@ public class ChiTietHoaDon {
   private int maSP;
   private int soLuong;
   private double thanhTien;
-  private String ghiChu; // New field
+  private String ghiChu;
 
   public ChiTietHoaDon() {
   }

@@ -9,10 +9,6 @@ public class ChamCong {
   private Timestamp thoiGianCheckIn;
   private Timestamp thoiGianCheckOut;
 
-  // Extra fields for display if needed (e.g., joined names), but usually handled
-  // by DAO joining or simpler DTO.
-  // For now, let's keep it simple mapping to DB.
-
   public ChamCong() {
   }
 

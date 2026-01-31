@@ -2,7 +2,7 @@ package com.cinema.dto;
 
 public class WeeklyPromotion {
   private int id;
-  private int dayOfWeek; // 2=Mon ... 8=Sun
+  private int dayOfWeek;
   private String name;
   private double discountValue;
   private boolean isPercent;

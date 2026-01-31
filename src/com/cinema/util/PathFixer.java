@@ -80,9 +80,6 @@ public class PathFixer {
     String lower = normalized.toLowerCase();
 
     // Target folders: "hinh/" and "images/"
-    // Scan for the *last* occurrence? Or first?
-    // Usually paths are like D:/Project/Cinema/hinh/poster.jpg
-    // We want hinh/poster.jpg
 
     int idx = -1;
 
@@ -95,13 +92,6 @@ public class PathFixer {
       idx = hinhIdx;
     }
 
-    // If images exists and is "better" (e.g. maybe user has hinh/images/...),
-    // usually we want the top level resource folder.
-    // If both exist, take the first one found?
-    // Example: D:/.../images/hinh/foo.jpg -> images/hinh/foo.jpg
-    // Example: D:/.../hinh/images/foo.jpg -> hinh/images/foo.jpg
-    // So taking the first index is safe.
-
     if (imgIdx != -1) {
       if (idx == -1 || imgIdx < idx) {
         idx = imgIdx;
@@ -111,13 +101,6 @@ public class PathFixer {
     if (idx != -1) {
       return normalized.substring(idx);
     }
-
-    // Fallback: If it starts with absolute path like "D:/" or "/" but doesn't have
-    // hinh/images
-    // Maybe just strip everything up to the last slash? (Dangerous if just filename
-    // is not unique enough or folder structure matters)
-    // But for now, let's stick to the folder detection as seen in the screenshots.
-    // User screenshot: D:\JavaBackend\JavaWeb\CinemaManager\hinh\ledo...
 
     return normalized;
   }

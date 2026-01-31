@@ -6,17 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// I will define a lightweight DTO class here if it doesn't exist, or check existing.
-// Checking file system first is better but to save turns I will create a new simple DTO inside or separate.
-// Existing files showed `Ghe` in TableInspector but I didn't verify com.cinema.dto.Ghe exists.
-// I'll assume it doesn't or create it.
-
 public class GheDAO {
-
-  // Inner DTO for simplicity in this context if not found, but let's try to use
-  // standard logic
-  // I'll create the DTO in a separate file in the next step if needed, but for
-  // now I'll return a helper object or just use standard logic
 
   public static class SeatInfo {
     public int maGhe;
@@ -35,8 +25,6 @@ public class GheDAO {
   public List<SeatInfo> getSeatsByRoom(int maPhong) {
     List<SeatInfo> list = new ArrayList<>();
     String sql = "SELECT * FROM Ghe WHERE MaPhong = ? ORDER BY TenGhe";
-    // Ordering by TenGhe (A1, A10, A2...) might be tricky text sort but ok for now.
-    // ideally we parse Row/Col.
 
     Connection conn = DBConnection.getConnection();
     try (

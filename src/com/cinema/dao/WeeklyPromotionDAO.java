@@ -30,8 +30,6 @@ public class WeeklyPromotionDAO {
   }
 
   public void updatePromotion(WeeklyPromotion wp) {
-    // If exists update, else insert (though usually we seed them 2-8)
-    // Let's assume we maintain ID 1-7 or similar, or just basic update by ID
     String sql = "UPDATE KhuyenMaiTuan SET day_of_week=?, name=?, discount_value=?, is_percent=?, active=? WHERE id=?";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement pstm = conn.prepareStatement(sql)) {

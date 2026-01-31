@@ -112,12 +112,6 @@ public class VeDAO {
 
     // 5. Update Refund by Schedule and Seat (Helper if ID unknown)
     public boolean refundTicket(int maLichChieu, String tenGhe) {
-        // Need to find MaVe or just update by join condition or subquery
-        // Since we didn't store MaGhe directly in UI mostly, we look it up.
-        // Simple 2-step: Find MaGhe -> Update Ve
-        // Or Query: UPDATE Ve v JOIN Ghe g ON v.MaGhe = g.MaGhe SET v.TrangThai =
-        // 'REFUNDED' WHERE v.MaLichChieu = ? AND g.TenGhe = ?
-        // MySQL Update with Join:
         String sql = "UPDATE Ve v JOIN Ghe g ON v.MaGhe = g.MaGhe SET v.TrangThai = 'REFUNDED' WHERE v.MaLichChieu = ? AND g.TenGhe = ?";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
             pstm.setInt(1, maLichChieu);

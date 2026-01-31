@@ -71,10 +71,6 @@ public class KhachHangDAO {
 
   public java.util.List<KhachHang> getAllKhachHang() {
     java.util.List<KhachHang> list = new java.util.ArrayList<>();
-    // Exclude Guest/Walk-in (ID 1) typically, or show all?
-    // Usually loyalty program lists REAL members. Let's exclude ID 1 if it is
-    // 'Khách Vãng Lai'.
-    // But for safety, just select all. User can filter.
     String sql = "SELECT * FROM KhachHang WHERE MaKH > 1";
     Connection conn = DBConnection.getConnection();
     try (
@@ -137,23 +133,12 @@ public class KhachHangDAO {
     return -1;
   }
 
-  // Ensure "Khach Vang Lai" (Walk-in Customer) exists
   public int ensureGuestCustomer() {
-    // Try to finding ID 1? Database might auto-increment past 1.
-    // But our code hardcodes ID 1.
-    // Better strategy: Check if ID 1 exists. If not, insert with ID 1 explicitly if
-    // DB allows (usually yes if not strictly auto-inc or if auto-inc slot 1 is
-    // free)
 
-    // Actually, AUTO_INCREMENT usually ignores explicit ID unless specified?
-    // Let's try to fetch ID 1.
     KhachHang k = getKhachHangById(1);
     if (k != null)
       return 1;
 
-    // If not found, try to insert one.
-    // Note: Resetting auto-increment or forcing ID 1 is tricky in portable code.
-    // We will try to INSERT with ID 1 explicitly.
     String sql = "INSERT INTO KhachHang (MaKH, HoTen, SDT, Email) VALUES (1, 'Khách Vãng Lai', '0000000000', 'guest@cinema.com')";
     Connection conn = DBConnection.getConnection();
     try (

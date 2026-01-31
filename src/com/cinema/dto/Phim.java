@@ -7,16 +7,14 @@ public class Phim {
     private String theLoai;
     private int thoiLuong;
     private String daoDien;
-    private String moTa; // Synopsis
-    private String trangThai; // Status (Active, Archived, Coming Soon)
-    private String poster; // New Field
-    private java.sql.Date namSanXuat; // Release Date
+    private String moTa;
+    private String trangThai;
+    private String poster;
+    private java.sql.Date namSanXuat;
 
-    // Constructor không tham số
     public Phim() {
     }
 
-    // Constructor đầy đủ
     public Phim(int maPhim, String tenPhim, String theLoai, int thoiLuong, String daoDien, String moTa,
             String trangThai, String poster, java.sql.Date namSanXuat) {
         this.maPhim = maPhim;

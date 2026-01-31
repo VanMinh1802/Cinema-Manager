@@ -562,29 +562,7 @@ INSERT INTO `Ve` VALUES (58,147,919,NULL,1,'2026-01-22 13:31:25',80000.00,18,'SO
 /*!40000 ALTER TABLE `Ve` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `quydinhhoivien`
---
 
-DROP TABLE IF EXISTS `quydinhhoivien`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `quydinhhoivien` (
-  `config_key` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `config_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`config_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `quydinhhoivien`
---
-
-LOCK TABLES `quydinhhoivien` WRITE;
-/*!40000 ALTER TABLE `quydinhhoivien` DISABLE KEYS */;
-INSERT INTO `quydinhhoivien` VALUES ('POINT_VALUE_VND','1000'),('POINTS_PER_10K','1');
-/*!40000 ALTER TABLE `quydinhhoivien` ENABLE KEYS */;
-UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

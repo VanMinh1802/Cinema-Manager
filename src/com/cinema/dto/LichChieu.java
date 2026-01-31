@@ -49,7 +49,6 @@ public class LichChieu {
         return giaVe;
     }
 
-    // Hàm này giúp hiển thị đẹp trong JList hoặc ComboBox
     @Override
     public String toString() {
         return tenPhim + " - " + gioChieu + " (" + tenPhong + ")";
