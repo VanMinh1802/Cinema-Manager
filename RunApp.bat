@@ -19,7 +19,7 @@ if %errorlevel% neq 0 (
 )
 
 echo Starting Application...
-java -cp "build/classes;lib/*" com.cinema.gui.MainFrame
+java -cp "build/classes;lib/*" com.cinema.gui.LoginFrame
 
 echo.
 echo Application Closed.
