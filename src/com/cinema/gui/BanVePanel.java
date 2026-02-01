@@ -208,14 +208,10 @@ public class BanVePanel extends JPanel {
                     // Update Promo based on Showtime Date
                     java.time.LocalDate showDate = currentLichChieu.getNgayChieu().toLocalDate();
                     // Convert Java Date WeekDay to DB format (Sun=1, Mon=2...)
-                    // Java: Mon=1, Sun=7
                     int javaDay = showDate.getDayOfWeek().getValue();
                     int dbDay = javaDay + 1;
-                    if (javaDay == 7)
-                        dbDay = 1;
 
                     todaysPromo = promoDAO.getPromotionByDay(dbDay);
-                    // Also check for Special Holidays if implemented
                 }
                 loadSeatMap();
                 resetCart();
